@@ -1,0 +1,106 @@
+Explicación del código
+Calcular la media, la desviación estándar y el coeficiente de variación utilizando diferentes métodos
+Se calculan las métricas utilizando numpy, pandas y scipy como en el ejemplo anterior.
+Función para calcular SNR
+calculate_snr(signal, noise): Función que calcula la SNR dado una señal y un ruido.
+Contaminar la señal con ruido gaussiano y calcular SNR
+noise_gaussian = np.random.normal(0, noise_std, signal.shape): Genera el ruido gaussiano.
+noisy_signal_gaussian = signal + noise_gaussian: Añade el ruido a la señal original.
+snr_gaussian = calculate_snr(signal, noise_gaussian): Calcula la SNR después de añadir ruido gaussiano.
+Graficar la señal original y la señal con ruido gaussiano.
+Graficar el histograma y la función de probabilidad para la señal con ruido gaussiano.
+Contaminar la señal con ruido de impulso y calcular SNR
+impulse_noise = np.zeros_like(signal): Crea un array de ceros con la misma forma que la señal.
+num_impulses = int(0.01 * len(signal)): Define el número de impulsos como el 1% del total de muestras.
+impulse_positions = np.random.choice(len(signal), num_impulses, replace=False): Selecciona posiciones aleatorias para los impulsos.
+impulse_noise[impulse_positions] = impulse_magnitude: Asigna magnitud a los impulsos en las posiciones seleccionadas.
+noisy_signal_impulse = signal + impulse_noise: Añade el ruido de impulso a la señal original.
+snr_impulse = calculate_snr(signal, impulse_noise): Calcula la SNR después de añadir ruido de impulso.
+Graficar la señal original y la señal con ruido de impulso.
+Graficar el histograma y la función de probabilidad para la señal con ruido de impulso.
+Contaminar la señal con ruido tipo artefacto y calcular SNR
+artifact_noise = np.zeros_like(signal): Crea un array de ceros con la misma forma que la señal.
+num_artifacts = int(0.01 * len(signal)): Define el número de artefactos como el 1% del total de muestras.
+artifact_positions = np.random.choice(len(signal), num_artifacts, replace=False): Selecciona posiciones aleatorias para los artefactos.
+artifact_noise[artifact_positions] = artifact_magnitude: Asigna magnitud a los artefactos en las posiciones seleccionadas.
+noisy_signal_artifact = signal + artifact_noise: Añade el ruido tipo artefacto a la señal original.
+snr_artifact = calculate_snr(signal, artifact_noise): Calcula la SNR después de añadir ruido tipo artefacto.
+Graficar la señal original y la señal con ruido tipo artefacto.
+Graficar el histograma y la función de probabilidad para la señal con ruido tipo artefacto.
+Graficar media, desviación estándar y coeficiente de variación
+Se crean gráficos de barras para cada métrica (plt.bar()), con diferentes colores para cada método (numpy, pandas, scipy).
+
+
+
+
+2
+
+Tipos de ruido
+Ruido Gaussiano: Este tipo de ruido sigue una distribución normal y se caracteriza por valores de ruido que se distribuyen alrededor de cero con una desviación estándar específica. Es comúnmente utilizado para simular el ruido blanco en señales.
+
+Ruido de Impulso: Este ruido se manifiesta como picos repentinos en la señal. Los impulsos ocurren en posiciones aleatorias y tienen una magnitud fija. Este tipo de ruido es común en sistemas de transmisión que sufren interferencias esporádicas.
+
+Ruido Tipo Artefacto: Similar al ruido de impulso, pero los artefactos pueden ser picos o saltos en la señal con una magnitud mayor y pueden representar, por ejemplo, movimientos bruscos en un sensor o interferencias eléctricas.
+
+Cálculo del SNR (Signal-to-Noise Ratio)
+La relación señal-ruido (SNR) se calcula como la razón entre la potencia de la señal y la potencia del ruido, expresada en decibelios (dB). La fórmula para el SNR en decibelios es:
+
+SNR
+=
+10
+log
+⁡
+10
+(
+Potencia de la Se
+n
+˜
+al
+Potencia del Ruido
+)
+SNR=10log 
+10
+​
+ ( 
+Potencia del Ruido
+Potencia de la Se 
+n
+˜
+ al
+​
+ )
+
+Interpretación de los Resultados
+Señal Original:
+
+Media, desviación estándar y coeficiente de variación: Estos valores representan las propiedades estadísticas de la señal sin ruido. La media y la desviación estándar están en las mismas unidades que la señal original (probablemente voltios o unidades arbitrarias dependiendo del contexto del experimento).
+Coeficiente de variación: Es una medida adimensional que representa la relación entre la desviación estándar y la media, expresada en porcentaje.
+Señal con Ruido Gaussiano:
+
+SNR después de añadir ruido gaussiano: El SNR en dB indica cuán fuerte es la señal en comparación con el ruido. Un SNR más alto significa una señal más limpia.
+Gráficas: La señal con ruido gaussiano tendrá variaciones suaves alrededor de la señal original debido a la naturaleza del ruido blanco. El histograma mostrará una distribución normal centrada en la media de la señal.
+Señal con Ruido de Impulso:
+
+SNR después de añadir ruido de impulso: Este valor de SNR indicará la relación entre la señal y los picos de ruido de impulso. Dado que los impulsos son picos altos, la SNR puede ser más baja que con ruido gaussiano.
+Gráficas: La señal con ruido de impulso mostrará picos en posiciones aleatorias. El histograma tendrá picos más altos en valores específicos.
+Señal con Ruido Tipo Artefacto:
+
+SNR después de añadir ruido tipo artefacto: Similar al ruido de impulso, pero con picos de mayor magnitud. La SNR puede ser aún más baja debido a los grandes artefactos.
+Gráficas: La señal con ruido tipo artefacto mostrará picos más grandes y menos frecuentes. El histograma reflejará estos valores altos.
+Ejemplo de Interpretación de Resultados
+Suponiendo los siguientes valores de SNR obtenidos del código:
+
+SNR después de añadir ruido gaussiano: 20 dB
+SNR después de añadir ruido de impulso: 10 dB
+SNR después de añadir ruido tipo artefacto: 5 dB
+Estos valores indican que:
+
+Con ruido gaussiano, la señal es significativamente más fuerte que el ruido (20 dB).
+Con ruido de impulso, la señal es menos fuerte en comparación con los picos de ruido (10 dB), lo que sugiere que los impulsos tienen un impacto notable.
+Con ruido tipo artefacto, la señal es apenas más fuerte que los grandes picos de artefactos (5 dB), indicando que los artefactos dominan la señal.
+Gráficas y Unidades
+Las gráficas de las señales (señal original y señales contaminadas) están en las mismas unidades que la señal original.
+Las gráficas de histograma muestran la densidad de probabilidad de los valores de la señal.
+Las unidades de SNR están en decibelios (dB), una unidad logarítmica que mide la relación entre dos potencias.
+
+
